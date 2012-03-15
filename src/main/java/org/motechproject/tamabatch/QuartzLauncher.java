@@ -14,8 +14,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class QuartzLauncher {
+
+    Logger log = Logger.getLogger(QuartzLauncher.class.getName());
 
     Job viewIndexerJob;
     private SimpleJobLauncher simpleJobLauncher;
@@ -26,16 +30,15 @@ public class QuartzLauncher {
     }
 
     public void run() {
-        System.out.println(this.getClass().getName() + " " + " RUNNING ");
+        log.entering(this.getClass().getName(), "run");
         final HashMap<String, JobParameter> parameters = new HashMap<String, JobParameter>();
-        parameters.put("soms", new JobParameter("" + new Random().nextLong()));
+        parameters.put("id", new JobParameter("" + new Random().nextLong()));
         JobParameters jobParameters = new JobParameters(parameters);
         try {
             simpleJobLauncher.run(viewIndexerJob, jobParameters);
         } catch (Exception e) {
-            e.printStackTrace();  //TODO : e ignored
+            log.log(Level.WARNING, e.getMessage(), e);
         }
-
-
+        log.exiting(this.getClass().getName(), "run");
     }
 }

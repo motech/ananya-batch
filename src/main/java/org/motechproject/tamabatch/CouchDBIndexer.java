@@ -15,10 +15,9 @@ public class CouchDBIndexer {
 
     public void indexAllViews() throws IOException, JSONException {
         log.entering(CouchDBIndexer.class.getName(), "indexAllViews");
-        final String databaseName = "tama-web";
         for (String database : CouchDbMetaData.getApplicationDatabases()) {
             try {
-            indexAllViewsInDatabase(databaseName);
+            indexAllViewsInDatabase(database);
             } catch (Exception e) {
                 log.severe(e.getMessage());
             }

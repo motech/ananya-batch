@@ -25,6 +25,10 @@ public class CouchDbMetaData {
         return String.format("%s%s/%s/_view/all", couchDbBaseUrl(), databaseName, designDocName);
     }
 
+    public static String getUrlForCompaction(String databaseName) {
+        return String.format("%s%s/_compact", couchDbBaseUrl(), databaseName);
+    }
+
     List<String> getDesignDocNames(String dbName) throws IOException, JSONException {
         String url = couchDbBaseUrl() + dbName + "/_all_docs?startkey=%22_design%2F%22&endkey=%22_design0%22&include_docs=true";
         final JSONObject jsonObject = new JSONObject(httpGetAsString(url));

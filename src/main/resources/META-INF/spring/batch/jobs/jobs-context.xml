@@ -24,25 +24,54 @@
         <property name="jobRepository" ref="jobRepository"/>
     </bean>
 
-    <bean id="quartzLaucher" class="org.motechproject.tamabatch.QuartzLauncher">
+    <bean id="quartzLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
         <constructor-arg ref="viewIndexerJob"/>
         <constructor-arg ref="jobLauncher"/>
     </bean>
 
-    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="quartzLaucher"/>
+    <bean id="viewIndexJobLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
+        <constructor-arg ref="viewIndexerJob"/>
+        <constructor-arg ref="jobLauncher"/>
+    </bean>
+
+    <bean id="viewIndexJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="viewIndexJobLauncher"/>
         <property name="targetMethod" value="run"/>
     </bean>
 
-    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="jobDetail"/>
+    <bean id="viewIndexCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="viewIndexJobDetail"/>
+        <property name="cronExpression" value="0 */15 * * * ?"/>
+    </bean>
+
+    <bean id="dbCompactor" class="org.motechproject.tamabatch.DBCompactor"/>
+
+    <batch:job id="dbCompactorJob">
+        <batch:step id="dbCompactorStepIndex">
+            <batch:tasklet ref="viewIndexer"/>
+        </batch:step>
+    </batch:job>
+
+    <bean id="dbCompactorJobLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
+        <constructor-arg ref="dbCompactorJob"/>
+        <constructor-arg ref="jobLauncher"/>
+    </bean>
+
+    <bean id="dbCompactorJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="dbCompactorJobLauncher"/>
+        <property name="targetMethod" value="run"/>
+    </bean>
+
+    <bean id="dbCompactorCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="viewIndexJobDetail"/>
         <property name="cronExpression" value="0 */15 * * * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="cronTrigger"/>
+                <ref bean="viewIndexCronTrigger"/>
+                <ref bean="dbCompactorCronTrigger"/>
             </list>
         </property>
     </bean>
