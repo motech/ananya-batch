@@ -31,15 +31,8 @@ import java.util.List;
  */
 public class ViewIndexer implements  Tasklet, InitializingBean {
 
-    public static final String couch_view_url = "http://localhost:5984/_utils/database.html?tama-web/_design/Administrator/_view/by_username";
-
     public RepeatStatus execute(StepContribution arg0, ChunkContext arg1) throws Exception {
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Indexing view .. ");
-		org.apache.http.client.HttpClient httpclient = new DefaultHttpClient();
-		System.out.println("Response " + httpclient.execute(new HttpGet(couch_view_url)));
-
-
-        new CouchDBIndexer("tama-web").indexAllViews();
+        new CouchDBIndexer().indexAllViews();
         return RepeatStatus.FINISHED;
 	}
 

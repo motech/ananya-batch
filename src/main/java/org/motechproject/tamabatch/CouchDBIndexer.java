@@ -7,24 +7,36 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CouchDBIndexer {
-    private String dbName;
-
-    public CouchDBIndexer(String dbName) {
-        this.dbName = dbName;
-    }
+    
+    Logger log = Logger.getLogger(CouchDBIndexer.class.getName());
 
     public void indexAllViews() throws IOException, JSONException {
-        final List<String> designDocNames = new CouchDbMetaData("tama-web").getDesignDocNames();
+        log.entering(CouchDBIndexer.class.getName(), "indexAllViews");
+        final String databaseName = "tama-web";
+        for (String database : CouchDbMetaData.getApplicationDatabases()) {
+            try {
+            indexAllViewsInDatabase(databaseName);
+            } catch (Exception e) {
+                log.severe(e.getMessage());
+            }
+        }
+        log.exiting(this.getClass().getName(), "indexAllViews");
+    }
+
+    private void indexAllViewsInDatabase(String databaseName) throws IOException, JSONException {
+        final List<String> designDocNames = new CouchDbMetaData().getDesignDocNames(databaseName);
         for (String designDocName : designDocNames) {
-            indexView(designDocName);
+            indexView(databaseName, designDocName);
         }
     }
 
-    private void indexView(String designDocName) throws IOException {
-        String url = "http://localhost:5984/tama-web/" + designDocName + "/_view/all";
+    private void indexView(String databaseName, String designDocName) throws IOException {
+        String url = CouchDbMetaData.getUrlForView(databaseName, designDocName);
         HttpClient httpclient = new DefaultHttpClient();
         System.out.println("Indexing " + designDocName + " " + httpclient.execute(new HttpGet(url)));
     }
+
 }
