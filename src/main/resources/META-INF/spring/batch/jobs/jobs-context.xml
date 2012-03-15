@@ -54,7 +54,7 @@
 
     <bean id="dbCompactorCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="dbCompactorJobDetail"/>
-        <property name="cronExpression" value="0 */15 * * * ?"/>
+        <property name="cronExpression" value="0 5 1 * * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
