@@ -15,7 +15,7 @@
  */
 package org.motechproject.tamabatch.couchdb.jobs;
 
-import org.motechproject.tamabatch.couchdb.CouchDBIndexer;
+import org.motechproject.tamabatch.couchdb.CouchDBViewIndexer;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -34,7 +34,7 @@ public class ViewIndexer implements  Tasklet, InitializingBean {
 
     @Override
     public RepeatStatus execute(StepContribution arg0, ChunkContext arg1) throws Exception {
-        new CouchDBIndexer().indexAllViews();
+        new CouchDBViewIndexer().indexAllViews();
         return RepeatStatus.FINISHED;
 	}
 }

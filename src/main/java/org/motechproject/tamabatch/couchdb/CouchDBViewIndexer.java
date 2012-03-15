@@ -9,15 +9,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class CouchDBIndexer {
-    
-    Logger log = Logger.getLogger(CouchDBIndexer.class.getName());
+public class CouchDBViewIndexer {
+
+    Logger log = Logger.getLogger(CouchDBViewIndexer.class.getName());
 
     public void indexAllViews() throws IOException, JSONException {
-        log.entering(CouchDBIndexer.class.getName(), "indexAllViews");
+        log.entering(CouchDBViewIndexer.class.getName(), "indexAllViews");
         for (String database : CouchDbMetaData.getApplicationDatabases()) {
             try {
-            indexAllViewsInDatabase(database);
+                indexAllViewsInDatabase(database);
             } catch (Exception e) {
                 log.severe(e.getMessage());
             }
@@ -33,9 +33,10 @@ public class CouchDBIndexer {
     }
 
     private void indexView(String databaseName, String designDocName) throws IOException {
+        log.info("Indexing " + databaseName + " : " + designDocName);
         String url = CouchDbMetaData.getUrlForView(databaseName, designDocName);
         HttpClient httpclient = new DefaultHttpClient();
-        System.out.println("Indexing " + designDocName + " " + httpclient.execute(new HttpGet(url)));
+        httpclient.execute(new HttpGet(url));
     }
 
 }
