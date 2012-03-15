@@ -1,4 +1,4 @@
-package org.motechproject.tamabatch;
+package org.motechproject.tamabatch.couchdb;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -29,7 +29,7 @@ public class CouchDbMetaData {
         return String.format("%s%s/_compact", couchDbBaseUrl(), databaseName);
     }
 
-    List<String> getDesignDocNames(String dbName) throws IOException, JSONException {
+    public List<String> getDesignDocNames(String dbName) throws IOException, JSONException {
         String url = couchDbBaseUrl() + dbName + "/_all_docs?startkey=%22_design%2F%22&endkey=%22_design0%22&include_docs=true";
         final JSONObject jsonObject = new JSONObject(httpGetAsString(url));
         final JSONArray rows = jsonObject.getJSONArray("rows");

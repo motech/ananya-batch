@@ -10,24 +10,19 @@
             http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
 
+    <batch:job-repository id="jobRepository"/>
+
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+            <property name="jobRepository" ref="jobRepository"/>
+        </bean>
+
+    <bean id="viewIndexer" class="org.motechproject.tamabatch.couchdb.jobs.ViewIndexer"/>
+
     <batch:job id="viewIndexerJob">
         <batch:step id="stepIndex">
             <batch:tasklet ref="viewIndexer"/>
         </batch:step>
     </batch:job>
-
-    <bean id="viewIndexer" class="org.motechproject.tamabatch.ViewIndexer"/>
-
-    <batch:job-repository id="jobRepository"/>
-
-    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-        <property name="jobRepository" ref="jobRepository"/>
-    </bean>
-
-    <bean id="quartzLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
-        <constructor-arg ref="viewIndexerJob"/>
-        <constructor-arg ref="jobLauncher"/>
-    </bean>
 
     <bean id="viewIndexJobLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
         <constructor-arg ref="viewIndexerJob"/>
@@ -44,11 +39,11 @@
         <property name="cronExpression" value="0 */15 * * * ?"/>
     </bean>
 
-    <bean id="dbCompactor" class="org.motechproject.tamabatch.DBCompactor"/>
+    <bean id="dbCompactor" class="org.motechproject.tamabatch.couchdb.jobs.DBCompactor"/>
 
     <batch:job id="dbCompactorJob">
         <batch:step id="dbCompactorStepIndex">
-            <batch:tasklet ref="viewIndexer"/>
+            <batch:tasklet ref="dbCompactor"/>
         </batch:step>
     </batch:job>
 
@@ -63,8 +58,8 @@
     </bean>
 
     <bean id="dbCompactorCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="viewIndexJobDetail"/>
-        <property name="cronExpression" value="0 */15 * * * ?"/>
+        <property name="jobDetail" ref="dbCompactorJobDetail"/>
+        <property name="cronExpression" value="* * * * * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

@@ -1,6 +1,7 @@
 package org.motechproject.tamabatch;
 
 import org.junit.Test;
+import org.motechproject.tamabatch.couchdb.CouchDbMetaData;
 
 import java.util.List;
 

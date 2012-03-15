@@ -1,4 +1,4 @@
-package org.motechproject.tamabatch;
+package org.motechproject.tamabatch.couchdb;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -7,6 +7,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.motechproject.tamabatch.couchdb.CouchDbMetaData;
 
 import java.io.IOException;
 

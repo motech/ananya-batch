@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.motechproject.tamabatch;
+package org.motechproject.tamabatch.couchdb.jobs;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.motechproject.tamabatch.couchdb.CouchDBIndexer;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -24,24 +23,18 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.InitializingBean;
 
-import java.util.List;
-
 /**
  * {@link ItemReader} with hard-coded input data.
  */
 public class ViewIndexer implements  Tasklet, InitializingBean {
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+    }
+
+    @Override
     public RepeatStatus execute(StepContribution arg0, ChunkContext arg1) throws Exception {
         new CouchDBIndexer().indexAllViews();
         return RepeatStatus.FINISHED;
-	}
-
-    public void buildIndex() {
-		try {
-			execute(null, null);
-		} catch(Exception e) {}
-	}
-
-	public void afterPropertiesSet() throws Exception {
 	}
 }
