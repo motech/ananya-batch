@@ -36,10 +36,9 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
                 a.add(new GrantedAuthorityImpl("admin"));
                 return new User("admin", "pass", true, true, true, true, a);
             }
-        } catch (Exception e) {
-            throw new BadCredentialsException("Invalid password");
+        } catch (Exception ignored) {
         }
-        return null;
+        throw new BadCredentialsException("Invalid password");
     }
 
     public String encrypt(String plaintext) throws Exception {
