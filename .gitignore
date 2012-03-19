@@ -20,7 +20,7 @@ log.roo
 out/
 *.out
 Error_log/
-tama.log*
+ananya.log*
 test-output/
 servers.bat
 src/main/webapp/emulator/*

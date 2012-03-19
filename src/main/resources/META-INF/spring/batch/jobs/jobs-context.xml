@@ -7,7 +7,7 @@
             http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
                                  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="org.motechproject.tamabatch"/>
+    <context:component-scan base-package="org.motechproject.ananyabatch"/>
 
     <batch:job-repository id="jobRepository"/>
 
@@ -21,7 +21,7 @@
         </batch:step>
     </batch:job>
 
-    <bean id="viewIndexJobLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
+    <bean id="viewIndexJobLauncher" class="org.motechproject.ananyabatch.QuartzLauncher">
         <constructor-arg ref="viewIndexerJob"/>
         <constructor-arg ref="jobLauncher"/>
     </bean>
@@ -42,7 +42,7 @@
         </batch:step>
     </batch:job>
 
-    <bean id="dbCompactorJobLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
+    <bean id="dbCompactorJobLauncher" class="org.motechproject.ananyabatch.QuartzLauncher">
         <constructor-arg ref="dbCompactorJob"/>
         <constructor-arg ref="jobLauncher"/>
     </bean>
@@ -65,7 +65,7 @@
         </batch:step>
     </batch:job>
 
-    <bean id="tapeBackupJobLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
+    <bean id="tapeBackupJobLauncher" class="org.motechproject.ananyabatch.QuartzLauncher">
         <constructor-arg ref="tapeBackupJob"/>
         <constructor-arg ref="jobLauncher"/>
     </bean>

@@ -16,7 +16,7 @@
         <sec:http-basic/>
     </sec:http>
 
-    <bean name="authenticationProvider" class="org.motechproject.tamabatch.AuthenticationProvider"/>
+    <bean name="authenticationProvider" class="org.motechproject.ananyabatch.AuthenticationProvider"/>
     <sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider ref="authenticationProvider"/>
     </sec:authentication-manager>

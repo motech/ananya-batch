@@ -1,4 +1,4 @@
-package org.motechproject.tamabatch.couchdb;
+package org.motechproject.ananyabatch.couchdb;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

@@ -1,4 +1,4 @@
-package org.motechproject.tamabatch;
+package org.motechproject.ananyabatch;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

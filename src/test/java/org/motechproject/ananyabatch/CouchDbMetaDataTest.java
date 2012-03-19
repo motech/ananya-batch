@@ -1,7 +1,7 @@
-package org.motechproject.tamabatch;
+package org.motechproject.ananyabatch;
 
 import org.junit.Test;
-import org.motechproject.tamabatch.couchdb.CouchDbMetaData;
+import org.motechproject.ananyabatch.couchdb.CouchDbMetaData;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class CouchDbMetaDataTest {
 
     @Test
     public void shouldGetDesignDocs() throws Exception {
-        final List<String> designDocNames = new CouchDbMetaData().getDesignDocNames("tama-web");
+        final List<String> designDocNames = new CouchDbMetaData().getDesignDocNames("ananya");
         assertTrue(designDocNames.size() > 0);
     }
 

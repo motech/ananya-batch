@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.motechproject.tamabatch.couchdb.jobs;
+package org.motechproject.ananyabatch.couchdb.jobs;
 
-import org.motechproject.tamabatch.couchdb.CouchDBViewIndexer;
+import org.motechproject.ananyabatch.couchdb.CouchDBViewIndexer;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;

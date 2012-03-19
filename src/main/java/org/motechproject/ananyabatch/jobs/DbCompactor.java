@@ -1,6 +1,6 @@
-package org.motechproject.tamabatch.couchdb.jobs;
+package org.motechproject.ananyabatch.couchdb.jobs;
 
-import org.motechproject.tamabatch.couchdb.CouchDbCompactor;
+import org.motechproject.ananyabatch.couchdb.CouchDbCompactor;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;

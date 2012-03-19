@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.motechproject.tama</groupId>
-    <artifactId>tama-batch</artifactId>
+    <groupId>org.motechproject.ananya</groupId>
+    <artifactId>ananya-batch</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>TamaBatch</name>
-    <description>Tama Batch Job Interface</description>
+    <name>AnanyaBatch</name>
+    <description>Ananya Batch Job Interface</description>
     <build>
         <plugins>
             <plugin>

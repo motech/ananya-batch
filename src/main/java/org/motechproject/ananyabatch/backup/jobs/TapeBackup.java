@@ -1,4 +1,4 @@
-package org.motechproject.tamabatch.backup.jobs;
+package org.motechproject.ananyabatch.backup.jobs;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
