@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:batch="http://www.springframework.org/schema/batch"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+            http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="org.motechproject.tamabatch"/>
 
     <batch:job-repository id="jobRepository"/>
 
     <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
             <property name="jobRepository" ref="jobRepository"/>
-        </bean>
-
-    <bean id="viewIndexer" class="org.motechproject.tamabatch.couchdb.jobs.ViewIndexer"/>
+    </bean>
 
     <batch:job id="viewIndexerJob">
         <batch:step id="stepIndex">
@@ -31,10 +33,8 @@
 
     <bean id="viewIndexCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="viewIndexJobDetail"/>
-        <property name="cronExpression" value="0 */15 * * * ?"/>
+        <property name="cronExpression" value="0 */1 * * * ?"/>
     </bean>
-
-    <bean id="dbCompactor" class="org.motechproject.tamabatch.couchdb.jobs.DBCompactor"/>
 
     <batch:job id="dbCompactorJob">
         <batch:step id="dbCompactorStepIndex">
@@ -54,7 +54,31 @@
 
     <bean id="dbCompactorCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="dbCompactorJobDetail"/>
-        <property name="cronExpression" value="0 5 1 * * ?"/>
+        <!-- TODO : put time here -->
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+    </bean>
+
+
+    <batch:job id="tapeBackupJob">
+        <batch:step id="tapeBackupStepIndex">
+            <batch:tasklet ref="tapeBackup"/>
+        </batch:step>
+    </batch:job>
+
+    <bean id="tapeBackupJobLauncher" class="org.motechproject.tamabatch.QuartzLauncher">
+        <constructor-arg ref="tapeBackupJob"/>
+        <constructor-arg ref="jobLauncher"/>
+    </bean>
+
+    <bean id="tapeBackupJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="tapeBackupJobLauncher"/>
+        <property name="targetMethod" value="run"/>
+    </bean>
+
+    <bean id="tapeBackupCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="tapeBackupJobDetail"/>
+        <!-- TODO : put time here -->
+        <property name="cronExpression" value="0 */1 * * * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -62,6 +86,7 @@
             <list>
                 <ref bean="viewIndexCronTrigger"/>
                 <ref bean="dbCompactorCronTrigger"/>
+                <ref bean="tapeBackupCronTrigger"/>
             </list>
         </property>
     </bean>

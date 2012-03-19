@@ -6,8 +6,10 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
-public class DBCompactor implements Tasklet, InitializingBean {
+@Component
+public class DbCompactor implements Tasklet, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {

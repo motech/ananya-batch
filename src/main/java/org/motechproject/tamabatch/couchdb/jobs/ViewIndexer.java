@@ -22,10 +22,12 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 /**
  * {@link ItemReader} with hard-coded input data.
  */
+@Component
 public class ViewIndexer implements  Tasklet, InitializingBean {
 
     @Override
