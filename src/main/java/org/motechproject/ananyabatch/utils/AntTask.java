@@ -14,7 +14,7 @@ public class AntTask {
     }
 
     public void run(String targetName) throws IOException, InterruptedException {
-        String cmd = "sudo ant -f " + buildFile + targetName +  "-lib " + buildFilePath;
+        String cmd = "sudo ant -f " + buildFile + " " + targetName + " -lib " + buildFilePath;
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
         process = runtime.exec(cmd);
