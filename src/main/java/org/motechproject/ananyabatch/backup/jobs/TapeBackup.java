@@ -33,7 +33,7 @@ public class TapeBackup implements Tasklet, InitializingBean {
         String buildFilePath = batchProperties.getProperty("deploy.build.file");
         String buildFile = buildFilePath + File.separator + "build.xml";
 
-        String cmd = "ant -f " + buildFile + "take.backup -lib " + buildFilePath;
+        String cmd = "sudo ant -f " + buildFile + "take.backup -lib " + buildFilePath;
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
         process = runtime.exec(cmd);
