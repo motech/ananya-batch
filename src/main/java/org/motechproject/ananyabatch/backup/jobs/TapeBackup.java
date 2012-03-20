@@ -31,7 +31,7 @@ public class TapeBackup implements Tasklet, InitializingBean {
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         String buildFilePath = batchProperties.getProperty("deploy.build.file");
-        String buildFile = buildFilePath+ File.separator+"build.xml";
+        String buildFile = buildFilePath + File.separator + "build.xml";
 
         String cmd = "ant -f " + buildFile + "take.backup -lib " + buildFilePath;
         Runtime runtime = Runtime.getRuntime();
