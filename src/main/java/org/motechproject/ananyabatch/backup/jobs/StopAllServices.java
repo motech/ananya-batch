@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 @Component
@@ -35,7 +32,8 @@ public class StopAllServices implements Tasklet, InitializingBean {
         String buildFilePath = batchProperties.getProperty("deploy.build.file");
         String buildFile = buildFilePath + File.separator + "build.xml";
         String environment = batchProperties.getProperty("environment");
-        new AntTask(buildFile, buildFilePath, environment).run("stop.services");
+        String antFile = batchProperties.getProperty("ant.file");
+        new AntTask(buildFile, buildFilePath, environment, antFile).run("stop.services");
         return RepeatStatus.FINISHED;
     }
 }

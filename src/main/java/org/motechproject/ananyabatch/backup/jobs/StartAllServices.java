@@ -33,7 +33,8 @@ public class StartAllServices implements Tasklet, InitializingBean {
         String buildFilePath = batchProperties.getProperty("deploy.build.file");
         String buildFile = buildFilePath + File.separator + "build.xml";
         String environment = batchProperties.getProperty("environment");
-        new AntTask(buildFile, buildFilePath, environment).run("start.services");
+        String antFile = batchProperties.getProperty("ant.file");
+        new AntTask(buildFile, buildFilePath, environment, antFile).run("start.services");
         return RepeatStatus.FINISHED;
 
     }
