@@ -34,7 +34,8 @@ public class StopAllServices implements Tasklet, InitializingBean {
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         String buildFilePath = batchProperties.getProperty("deploy.build.file");
         String buildFile = buildFilePath + File.separator + "build.xml";
-        new AntTask(buildFile, buildFilePath).run("stop.services");
+        String environment = batchProperties.getProperty("environment");
+        new AntTask(buildFile, buildFilePath, environment).run("stop.services");
         return RepeatStatus.FINISHED;
     }
 }

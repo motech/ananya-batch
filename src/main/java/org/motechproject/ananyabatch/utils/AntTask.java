@@ -7,14 +7,16 @@ import java.io.InputStreamReader;
 public class AntTask {
     private String buildFile;
     private String buildFilePath;
+    private String environment;
 
-    public AntTask(String buildFile, String buildFilePath) {
+    public AntTask(String buildFile, String buildFilePath, String environment) {
         this.buildFile = buildFile;
         this.buildFilePath = buildFilePath;
+        this.environment = environment;
     }
 
     public void run(String targetName) throws IOException, InterruptedException {
-        String cmd = "sudo ant -f " + buildFile + " " + targetName + " -lib " + buildFilePath;
+        String cmd = "sudo ant -f " + buildFile + " " + targetName + " -Denv=" + environment + " -lib " + buildFilePath;
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
         process = runtime.exec(cmd);

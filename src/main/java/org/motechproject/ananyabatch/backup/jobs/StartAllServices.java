@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 @Component
@@ -34,7 +32,8 @@ public class StartAllServices implements Tasklet, InitializingBean {
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         String buildFilePath = batchProperties.getProperty("deploy.build.file");
         String buildFile = buildFilePath + File.separator + "build.xml";
-        new AntTask(buildFile, buildFilePath).run("start.services");
+        String environment = batchProperties.getProperty("environment");
+        new AntTask(buildFile, buildFilePath, environment).run("start.services");
         return RepeatStatus.FINISHED;
 
     }
