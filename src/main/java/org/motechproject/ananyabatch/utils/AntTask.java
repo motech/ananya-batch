@@ -24,13 +24,8 @@ public class AntTask {
 
         BufferedReader buf = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line = "";
-        File abcd = new File("/home/motech/abcd");
-        abcd.createNewFile();
-        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/motech/abcd"));
-        writer.write("aaaaaaaaaaaaaaaaaa");
         while ((line = buf.readLine()) != null) {
-            writer.write(line);
+            System.out.println(line);
         }
-        writer.close();
     }
 }
